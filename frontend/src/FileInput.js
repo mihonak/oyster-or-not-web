@@ -11,7 +11,7 @@ export function FileInput (){
 
   useEffect(() => {
     async function fetchData(){
-      const response = await fetch('http://localhost:8000', {
+      const response = await fetch('https://oyster-or-not-web-backend.onrender.com', {
         mode: "cors",
         method: "POST",
         headers: {

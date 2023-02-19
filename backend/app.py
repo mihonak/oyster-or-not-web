@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask_cors import CORS
 from functions import my_functions
 from functions import pytorch_predict
+import os
 
 app = Flask(__name__)
 
@@ -20,4 +21,6 @@ def index():
     return {'prediction':result}
 
 if __name__ == '__main__':
-    app.run(debug=True, host="localhost", port=8000)
+    port = int(os.getenv('PORT', default=8000))
+    print(port)
+    app.run(debug=True, host='0.0.0.0', port=port)

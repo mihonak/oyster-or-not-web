@@ -8,7 +8,7 @@ idna==3.4 ; python_version >= '3.5'
 itsdangerous==2.1.2 ; python_version >= '3.7'
 jinja2==3.1.2 ; python_version >= '3.7'
 markupsafe==2.1.2 ; python_version >= '3.7'
-numpy==1.24.2 ; python_version >= '3.7'
+numpy==1.21.6 ; python_version >= '3.7'
 opencv-python==4.7.0.68
 pillow==9.4.0 ; python_version >= '3.7'
 pillow-pil==0.1.dev0

@@ -1,10 +1,9 @@
 from flask import Flask, request
-import pytorch_predict as pytorch_predict
 from flask_cors import CORS
 from functions import my_functions
-from flask import request
+from functions import pytorch_predict
 
-app = Flask(__name__, static_folder='../frontend/static', template_folder='../frontend/public')
+app = Flask(__name__)
 
 CORS(app)
 
@@ -14,7 +13,7 @@ def index():
         data = request.json.get('image').split(',')[1]
         my_functions.decode_image(data)
 
-    if pytorch_predict.predict_oyster_or_not('backend/images/uploaded.jpg'):
+    if pytorch_predict.predict_oyster_or_not('images/uploaded.jpg'):
         result = 'This is oyster!'
     else:
         result = 'This is not oyster.'

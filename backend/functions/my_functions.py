@@ -3,7 +3,7 @@ import base64
 import numpy as np
 
 def decode_image(img_base64):
-    file_path=r'backend/images/uploaded.jpg'
+    file_path=r'images/uploaded.jpg'
 
     img_binary = base64.b64decode(img_base64)
     jpg=np.frombuffer(img_binary,dtype=np.uint8)

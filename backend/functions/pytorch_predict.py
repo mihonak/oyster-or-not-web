@@ -55,7 +55,7 @@ def predict_oyster_or_not(path):
     ])
 
     the_model = ConvNet()
-    the_model.load_state_dict(torch.load('backend/best_checkpoint.model'))
+    the_model.load_state_dict(torch.load('functions/best_checkpoint.model'))
     the_model.eval()
 
     img = Image.open(path)

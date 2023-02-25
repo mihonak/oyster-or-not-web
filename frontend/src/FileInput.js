@@ -3,7 +3,15 @@ import {useState} from "react";
 import ReactImageBase64 from "react-image-base64"
 import { useEffect } from 'react';
 
+let backend_origin = '';
+
 export function FileInput (){
+
+  if (window.location.hostname === 'localhost'){
+    backend_origin = 'http://localhost:8000'
+  } else {
+    backend_origin = 'https://oyster-or-not-web-backend.onrender.com'
+  }
 
   const [errors, setErrors] = useState([]);
   const [base64, setBase64] = useState('');
@@ -11,7 +19,7 @@ export function FileInput (){
 
   useEffect(() => {
     async function fetchData(){
-      const response = await fetch('https://oyster-or-not-web-backend.onrender.com', {
+      const response = await fetch(backend_origin, {
         mode: "cors",
         method: "POST",
         headers: {

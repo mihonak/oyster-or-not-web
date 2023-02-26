@@ -28,7 +28,11 @@ export function FileInput (){
         body: JSON.stringify({image:base64})
       });
       const json = await response.json();
-      setResult(json['prediction']);
+      if (json['prediction'] == true){
+        setResult('This is oyster🦪😋');
+      }else{
+        setResult('This is not oyster🤔')
+      }
     }
     if (base64.length > 0){
       fetchData()
@@ -37,6 +41,7 @@ export function FileInput (){
 
   return (
     <div>
+      <h1>{result}</h1>
       <ReactImageBase64
         maxFileSize={10485760}
         thumbnail_size={300}
@@ -57,7 +62,6 @@ export function FileInput (){
         )
       }
       <img src={base64} alt="" />
-      <p>{result}</p>
     </div>
   )
 

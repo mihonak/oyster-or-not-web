@@ -15,9 +15,9 @@ def index():
         my_functions.decode_image(data)
 
     if pytorch_predict.predict_oyster_or_not('images/uploaded.jpg'):
-        result = 'This is oyster!'
+        result = True
     else:
-        result = 'This is not oyster.'
+        result = False
     return {'prediction':result}
 
 if __name__ == '__main__':

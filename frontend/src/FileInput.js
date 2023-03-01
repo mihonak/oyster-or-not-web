@@ -28,7 +28,7 @@ export function FileInput (){
         body: JSON.stringify({image:base64})
       });
       const json = await response.json();
-      if (json['prediction'] == true){
+      if (json['prediction'] === true){
         setResult('This is oyster🦪😋');
       }else{
         setResult('This is not oyster🤔')
@@ -47,7 +47,6 @@ export function FileInput (){
         thumbnail_size={300}
         drop={true}
         dropText="Choose a file or drag it here."
-        capture="environment"
         multiple={false}
         handleChange={ async data => {
           if (data.result) {

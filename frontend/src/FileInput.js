@@ -2,6 +2,10 @@ import React from 'react';
 import {useState} from "react";
 import ReactImageBase64 from "react-image-base64"
 import { useEffect } from 'react';
+import Button from '@mui/material/Button';
+import Paper from '@mui/material/Paper';
+import { Box, Grid, Typography } from '@mui/material';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 
 let backend_origin = '';
 
@@ -29,9 +33,9 @@ export function FileInput (){
       });
       const json = await response.json();
       if (json['prediction'] === true){
-        setResult('This is oyster🦪😋');
+        setResult('I love oysters! It looks yummy🦪😋');
       }else{
-        setResult('This is not oyster🤔')
+        setResult('No oysters in this picture...🤔')
       }
     }
     if (base64.length > 0){
@@ -40,28 +44,45 @@ export function FileInput (){
   }, [base64])
 
   return (
-    <div>
-      <h1>{result}</h1>
-      <ReactImageBase64
-        maxFileSize={10485760}
-        thumbnail_size={300}
-        drop={true}
-        dropText="Choose a file or drag it here."
-        multiple={false}
-        handleChange={ async data => {
-          if (data.result) {
-            setBase64(data.fileData);
-          } else {
-            setErrors([...errors, data.messages]);
+    <Box>
+      <Typography variant="h4" component="h1" align="center" sx={{mb:2}}>{result}</Typography>
+      <Grid container alignItems="center" justifyContent="center">
+        <Grid item xs={6}>
+          <Button variant="outlined" component="label" size="large" sx={{width:1,mb:2}} endIcon={<InsertPhotoIcon />}>
+            Upload
+            <ReactImageBase64
+              maxFileSize={10485760}
+              thumbnail_size={300}
+              drop={false}
+              dropText="Choose a file or drag it here."
+              multiple={false}
+              handleChange={ async data => {
+                if (data.result) {
+                  setBase64(data.fileData);
+                } else {
+                  setErrors([...errors, data.messages]);
+                }
+              }}
+            />
+          </Button>
+          { errors.map((error, index) => 
+              <p className="error-message" key={index}>{error}</p>
+            )
           }
-        }}
-      />
-      { errors.map((error, index) => 
-          <p className="error-message" key={index}>{error}</p>
-        )
-      }
-      <img src={base64} alt="" />
-    </div>
+        </Grid>
+      </Grid>
+      {(() => {
+        if (base64 !== "") {
+          return (
+            <Grid container alignItems="center" justifyContent="center">
+              <Grid item xs={6}>
+                <Paper elevation={12} component="img" src={base64} alt="" style={{width:'100%', height:'auto'}}/>
+              </Grid>
+            </Grid>
+          )
+        }
+      })()}
+    </Box>
   )
 
 }

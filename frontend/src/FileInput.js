@@ -3,8 +3,7 @@ import {useState} from "react";
 import ReactImageBase64 from "react-image-base64"
 import { useEffect } from 'react';
 import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 
 let backend_origin = '';
@@ -19,7 +18,7 @@ export function FileInput (){
 
   const [errors, setErrors] = useState([]);
   const [base64, setBase64] = useState('');
-  const [result, setResult] = useState('upload your pic.');
+  const [result, setResult] = useState('');
 
   useEffect(() => {
     async function fetchData(){
@@ -33,7 +32,7 @@ export function FileInput (){
       });
       const json = await response.json();
       if (json['prediction'] === true){
-        setResult('I love oysters! It looks yummy🦪😋');
+        setResult('I love oysters! They look yummy🦪😋');
       }else{
         setResult('No oysters in this picture...🤔')
       }
@@ -45,10 +44,10 @@ export function FileInput (){
 
   return (
     <Box>
-      <Typography variant="h4" component="h1" align="center" sx={{mb:2}}>{result}</Typography>
+      <Typography variant="h5" component="p" align="center" sx={{m:2}}>upload your pic👇</Typography>
       <Grid container alignItems="center" justifyContent="center">
-        <Grid item xs={6}>
-          <Button variant="outlined" component="label" size="large" sx={{width:1,mb:2}} endIcon={<InsertPhotoIcon />}>
+        <Grid item>
+          <Button variant="outlined" component="label" size="large" sx={{mb:2}} endIcon={<InsertPhotoIcon />}>
             Upload
             <ReactImageBase64
               maxFileSize={10485760}
@@ -75,8 +74,17 @@ export function FileInput (){
         if (base64 !== "") {
           return (
             <Grid container alignItems="center" justifyContent="center">
-              <Grid item xs={6}>
-                <Paper elevation={12} component="img" src={base64} alt="" style={{width:'100%', height:'auto'}}/>
+              <Grid item xs={12} sm={8} md={6}>
+                <Card>
+                  <CardContent>
+                    <Typography variant="p">{result}</Typography>
+                  </CardContent>
+                  <CardMedia
+                    sx={{height:300}}
+                    image={base64}
+                    alt="uploaded picture"
+                  />
+                </Card>
               </Grid>
             </Grid>
           )

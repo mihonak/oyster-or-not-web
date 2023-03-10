@@ -1,4 +1,4 @@
-import { Container, Grid } from '@mui/material';
+import { Avatar, Container, Grid } from '@mui/material';
 import './App.css';
 import {FileInput} from './FileInput';
 
@@ -7,7 +7,14 @@ function App() {
     <div className="App">
       <Container>
         <Grid container alignItems="center" justifyContent="center">
-            <Grid component="img" src={process.env.PUBLIC_URL + '/logo192.png'} alt="Oyster or not" />
+          <Grid sx={{m:2}}>
+            <Avatar
+              alt="Oyster or not"
+              src={process.env.PUBLIC_URL + '/logo192.png'}
+              sx={{ width: 128, height: 128}}
+              variant="rounded"
+            />
+          </Grid>
         </Grid>
         <FileInput />
       </Container>

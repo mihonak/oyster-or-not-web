@@ -18,7 +18,7 @@ export function FileInput (){
 
   const [errors, setErrors] = useState([]);
   const [base64, setBase64] = useState('');
-  const [result, setResult] = useState('');
+  const [result, setResult] = useState('I\'m waiting for  your picture.');
 
   useEffect(() => {
     async function fetchData(){
@@ -45,7 +45,7 @@ export function FileInput (){
   return (
     <Box>
       <Typography variant="h5" component="p" align="center" sx={{m:2}}>upload your pic👇</Typography>
-      <Grid container alignItems="center" justifyContent="center">
+      <Grid container alignItems="center" justifyContent="center" sx={{height:"100%"}}>
         <Grid item>
           <Button variant="outlined" component="label" size="large" sx={{mb:2}} endIcon={<InsertPhotoIcon />}>
             Upload
@@ -70,11 +70,11 @@ export function FileInput (){
           }
         </Grid>
       </Grid>
+      <Grid container alignItems="center" justifyContent="center">
+        <Grid item xs={12} sm={8} md={6}>
       {(() => {
         if (base64 !== "") {
           return (
-            <Grid container alignItems="center" justifyContent="center">
-              <Grid item xs={12} sm={8} md={6}>
                 <Card>
                   <CardContent>
                     <Typography variant="p">{result}</Typography>
@@ -85,11 +85,20 @@ export function FileInput (){
                     alt="uploaded picture"
                   />
                 </Card>
-              </Grid>
-            </Grid>
+          )
+        } else {
+          return (
+            <Card>
+              <CardContent>
+                <Typography variant="h6">{result}</Typography>
+                <Typography color={"text.secondary"}>If you upload a picture, I would tell you there are oysters or not.</Typography>
+              </CardContent>
+            </Card>
           )
         }
       })()}
+        </Grid>
+      </Grid>
     </Box>
   )
 

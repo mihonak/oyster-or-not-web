@@ -1,24 +1,39 @@
-import { Avatar, Container, Grid } from '@mui/material';
+import { Container } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Box } from '@mui/system';
 import './App.css';
 import {FileInput} from './FileInput';
+import {NavBar} from './NavBar';
+import React, { useState } from 'react';
+import { ColorModeContext } from './ColorModeContext';
 
 function App() {
+
+  const [ mode, setMode ] = useState("light");
+
+  const theme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
+
+  const colorMode = {
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+  }
+
   return (
-    <div className="App">
-      <Container>
-        <Grid container alignItems="center" justifyContent="center">
-          <Grid sx={{m:2}}>
-            <Avatar
-              alt="Oyster or not"
-              src={process.env.PUBLIC_URL + '/logo192.png'}
-              sx={{ width: 128, height: 128}}
-              variant="rounded"
-            />
-          </Grid>
-        </Grid>
-        <FileInput />
-      </Container>
-    </div>
+    <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+        <Box bgcolor={"background.default"} color={"text.primary"}>
+          <NavBar/>
+          <Container sx={{height:"100vh"}}>
+            <FileInput />
+          </Container>
+        </Box>
+      </ThemeProvider>
+    </ColorModeContext.Provider>
   );
 }
 

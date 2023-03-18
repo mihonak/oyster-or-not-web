@@ -3,7 +3,7 @@ import {useState} from "react";
 import ReactImageBase64 from "react-image-base64"
 import { useEffect } from 'react';
 import Button from '@mui/material/Button';
-import { Box, Card, CardContent, CardMedia, Grid, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Card, CardMedia, Grid, Typography } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 
 let backend_origin = '';
@@ -18,7 +18,13 @@ export function FileInput (){
 
   const [errors, setErrors] = useState([]);
   const [base64, setBase64] = useState('');
-  const [result, setResult] = useState('I\'m waiting for  your picture.');
+  const [result, setResult] = useState(() => {
+    return {
+      status:'info',
+      title:'I\'m waiting for your picture.',
+      message:'If you upload a picture, I would tell you there are oysters or not.'
+    }
+  });
 
   useEffect(() => {
     async function fetchData(){
@@ -32,9 +38,13 @@ export function FileInput (){
       });
       const json = await response.json();
       if (json['prediction'] === true){
-        setResult('I love oysters! They look yummy🦪😋');
+        setResult((prevResult) => {
+          return {...prevResult, status:'success', title:'Yes!', message:'I love oysters! They look yummy🦪😋'}
+        });
       }else{
-        setResult('No oysters in this picture...🤔')
+        setResult((prevResult) => {
+          return {...prevResult, status:'warning', title:'No.', message:'No oysters in this picture...🤔'}
+        });
       }
     }
     if (base64.length > 0){
@@ -72,31 +82,23 @@ export function FileInput (){
       </Grid>
       <Grid container alignItems="center" justifyContent="center">
         <Grid item xs={12} sm={8} md={6}>
-      {(() => {
-        if (base64 !== "") {
-          return (
-                <Card>
-                  <CardContent>
-                    <Typography variant="p">{result}</Typography>
-                  </CardContent>
+          <Alert severity={result.status}>
+            <AlertTitle>{result.title}</AlertTitle>
+            {result.message}
+          </Alert>
+          <Card sx={{mt:2}}>
+            {(() => {
+              if (base64 !== "") {
+                return (
                   <CardMedia
                     sx={{height:300}}
                     image={base64}
                     alt="uploaded picture"
                   />
-                </Card>
-          )
-        } else {
-          return (
-            <Card>
-              <CardContent>
-                <Typography variant="h6">{result}</Typography>
-                <Typography color={"text.secondary"}>If you upload a picture, I would tell you there are oysters or not.</Typography>
-              </CardContent>
-            </Card>
-          )
-        }
-      })()}
+                )
+              }
+            })()}
+          </Card>
         </Grid>
       </Grid>
     </Box>

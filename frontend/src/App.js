@@ -6,6 +6,7 @@ import {FileInput} from './FileInput';
 import {NavBar} from './NavBar';
 import React, { useState } from 'react';
 import { ColorModeContext } from './ColorModeContext';
+import { cyan } from '@mui/material/colors';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
   const theme = createTheme({
     palette: {
       mode: mode,
+      primary: cyan
     },
   });
 

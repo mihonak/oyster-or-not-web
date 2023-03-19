@@ -10,7 +10,7 @@ import { cyan } from '@mui/material/colors';
 
 function App() {
 
-  const [ mode, setMode ] = useState("light");
+  const [ mode, setMode ] = useState(localStorage.getItem('paletteMode') ? localStorage.getItem('paletteMode') :'light');
 
   const theme = createTheme({
     palette: {
@@ -20,9 +20,17 @@ function App() {
   });
 
   const colorMode = {
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
+    toggleColorMode: () => {
+      setMode((prevMode) => {
+        if (prevMode === 'light'){
+          localStorage.setItem('paletteMode', 'dark');
+          return 'dark';
+        } else {
+          localStorage.setItem('paletteMode', 'light');
+          return 'light';
+        }
+      })
+    }
   }
 
   return (

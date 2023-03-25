@@ -16,6 +16,26 @@ export function FileInput (){
     backend_origin = 'https://oyster-or-not-web-backend.onrender.com'
   }
 
+  const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(backend_origin, {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({greeting:"hello"})
+      });
+      const json = await response.json();
+      if (json['response'] === true){
+        console.log('wake up')
+        setIsActive(true);
+      }
+    })()
+  }, [])
+
   const [errors, setErrors] = useState([]);
   const [base64, setBase64] = useState('');
   const [result, setResult] = useState(() => {
@@ -52,56 +72,70 @@ export function FileInput (){
     }
   }, [base64])
 
-  return (
-    <Box>
-      <Typography variant="h5" component="p" align="center" sx={{m:2}}>upload your pic👇</Typography>
-      <Grid container alignItems="center" justifyContent="center" sx={{height:"100%"}}>
-        <Grid item>
-          <Button variant="outlined" component="label" size="large" sx={{mb:2}} endIcon={<InsertPhotoIcon />}>
-            Upload
-            <ReactImageBase64
-              maxFileSize={10485760}
-              thumbnail_size={300}
-              drop={false}
-              dropText="Choose a file or drag it here."
-              multiple={false}
-              handleChange={ async data => {
-                if (data.result) {
-                  setBase64(data.fileData);
-                } else {
-                  setErrors([...errors, data.messages]);
+  if (isActive) {
+    return (
+      <Box>
+        <Typography variant="h5" component="p" align="center" sx={{m:2}}>upload your pic👇</Typography>
+        <Grid container alignItems="center" justifyContent="center" sx={{height:"100%"}}>
+          <Grid item>
+            <Button variant="outlined" component="label" size="large" sx={{mb:2}} endIcon={<InsertPhotoIcon />}>
+              Upload
+              <ReactImageBase64
+                maxFileSize={10485760}
+                thumbnail_size={300}
+                drop={false}
+                dropText="Choose a file or drag it here."
+                multiple={false}
+                handleChange={ async data => {
+                  if (data.result) {
+                    setBase64(data.fileData);
+                  } else {
+                    setErrors([...errors, data.messages]);
+                  }
+                }}
+              />
+            </Button>
+            { errors.map((error, index) => 
+                <p className="error-message" key={index}>{error}</p>
+              )
+            }
+          </Grid>
+        </Grid>
+        <Grid container alignItems="center" justifyContent="center">
+          <Grid item xs={12} sm={8} md={6}>
+            <Alert severity={result.status}>
+              <AlertTitle>{result.title}</AlertTitle>
+              {result.message}
+            </Alert>
+            <Card sx={{mt:2}}>
+              {(() => {
+                if (base64 !== "") {
+                  return (
+                    <CardMedia
+                      sx={{height:300}}
+                      image={base64}
+                      alt="uploaded picture"
+                    />
+                  )
                 }
-              }}
-            />
-          </Button>
-          { errors.map((error, index) => 
-              <p className="error-message" key={index}>{error}</p>
-            )
-          }
+              })()}
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container alignItems="center" justifyContent="center">
-        <Grid item xs={12} sm={8} md={6}>
-          <Alert severity={result.status}>
-            <AlertTitle>{result.title}</AlertTitle>
-            {result.message}
-          </Alert>
-          <Card sx={{mt:2}}>
-            {(() => {
-              if (base64 !== "") {
-                return (
-                  <CardMedia
-                    sx={{height:300}}
-                    image={base64}
-                    alt="uploaded picture"
-                  />
-                )
-              }
-            })()}
-          </Card>
+      </Box>
+    )
+  } else {
+    return (
+      <Box>
+        <Typography variant="h5" component="p" align="center" sx={{m:2}}>Welcome!</Typography>
+        <Grid container alignItems="center" justifyContent="center">
+          <Grid item xs={12} sm={8} md={6}>
+            <Alert severity="info">
+              <AlertTitle>Be patient, our server is waking up from its nap.</AlertTitle>
+            </Alert>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
-  )
-
+      </Box>
+    )
+  }
 }

@@ -3,7 +3,7 @@ import {useState} from "react";
 import ReactImageBase64 from "react-image-base64"
 import { useEffect } from 'react';
 import Button from '@mui/material/Button';
-import { Alert, AlertTitle, Box, Card, CardMedia, Grid, Typography } from '@mui/material';
+import { Alert, AlertTitle, Box, Card, CardMedia, CircularProgress, Grid, Typography } from '@mui/material';
 import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 
 let backend_origin = '';
@@ -132,6 +132,11 @@ export function FileInput (){
           <Grid item xs={12} sm={8} md={6}>
             <Alert severity="info">
               <AlertTitle>Be patient, our server is waking up from its nap.</AlertTitle>
+              <Box align="center" sx={{m:2}}>
+                <CircularProgress
+                  variant="indeterminate"
+                />
+              </Box>
             </Alert>
           </Grid>
         </Grid>

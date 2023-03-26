@@ -57,15 +57,19 @@ export function FileInput (){
         body: JSON.stringify({image:base64})
       });
       const json = await response.json();
-      if (json['prediction'] === true){
-        setResult((prevResult) => {
-          return {...prevResult, status:'success', title:'Yes!', message:'I love oysters! They look yummy🦪😋'}
-        });
-      }else{
-        setResult((prevResult) => {
-          return {...prevResult, status:'warning', title:'No.', message:'No oysters in this picture...🤔'}
-        });
-      }
+
+      setTimeout(() => {
+        if (json['prediction'] === true){
+          setResult((prevResult) => {
+            return {...prevResult, status:'success', title:'Yes!', message:'I love oysters! They look yummy🦪😋'}
+          });
+        }else{
+          setResult((prevResult) => {
+            return {...prevResult, status:'warning', title:'No.', message:'No oysters in this picture...🤔'}
+          });
+        }
+      }, 3000)
+
     }
     if (base64.length > 0){
       fetchData()
@@ -87,6 +91,11 @@ export function FileInput (){
                 dropText="Choose a file or drag it here."
                 multiple={false}
                 handleChange={ async data => {
+
+                  setResult((prevResult) => {
+                    return {...prevResult, status:'info', title:'Let me see...', message:'Analyzing pixels... Just a few more moments!'}
+                  });
+
                   if (data.result) {
                     setBase64(data.fileData);
                   } else {

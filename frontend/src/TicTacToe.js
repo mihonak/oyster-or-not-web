@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import Button from "@mui/material/Button";
+import ButtonGroup from "@mui/material/ButtonGroup";
+import { Box, Grid, Link, Typography } from "@mui/material";
 
 function Square({ value, onSquareClick }) {
   return (
@@ -41,22 +43,31 @@ function Board({ oysterIsNext, squares, onPlay }) {
 
   return (
     <>
-      <p>{status}</p>
-      <div className="board-row">
-        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
-        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
-        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
-        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
-        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
-      </div>
-      <div className="board-row">
-        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
-        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
-        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
-      </div>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="baseline"
+      >
+        <Grid>
+          <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
+          <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
+          <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+        </Grid>
+        <Grid>
+          <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
+          <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
+          <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
+        </Grid>
+        <Grid>
+          <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
+          <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
+          <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+        </Grid>
+      </Grid>
+      <Typography variant="p" component="p" align="center" sx={{ m: 2 }}>
+        {status}
+      </Typography>
     </>
   );
 }
@@ -105,22 +116,51 @@ export default function TicTacToe() {
       description = "Go to game start";
     }
     return (
-      <li key={move}>
-        <Button onClick={() => JumpTo(move)}>{description}</Button>
-      </li>
+      <Button key={move} onClick={() => JumpTo(move)}>
+        {description}
+      </Button>
     );
   });
 
   return (
-    <div>
-      <Board
-        oysterIsNext={oysterIsNext}
-        squares={currentSquares}
-        onPlay={handlePlay}
-      />
-      <div className="game-info">
-        <ol>{moves}</ol>
-      </div>
-    </div>
+    <Box>
+      <Typography
+        variant="h5"
+        component="p"
+        align="center"
+        sx={{ mt: 4, mb: 2 }}
+      >
+        Enjoy Tic-Tac-Toe game while waiting.
+      </Typography>
+      <Grid
+        item
+        container
+        alignItems="flex-start"
+        justifyContent="space-between"
+      >
+        <Grid>
+          <Board
+            oysterIsNext={oysterIsNext}
+            squares={currentSquares}
+            onPlay={handlePlay}
+          />
+        </Grid>
+        <Grid>
+          <ButtonGroup
+            orientation="vertical"
+            aria-label="vertical outlined button group"
+          >
+            {moves}
+          </ButtonGroup>
+        </Grid>
+      </Grid>
+      <Link
+        href="https://react.dev/learn/tutorial-tic-tac-toe"
+        underline="always"
+        target="_blank"
+      >
+        React Tutorial: Tic-Tac-Toe
+      </Link>
+    </Box>
   );
 }

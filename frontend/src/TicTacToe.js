@@ -10,7 +10,7 @@ function Square({ value, onSquareClick }) {
       variant="outlined"
       component="label"
       size="large"
-      sx={{ width: "90px", height: "90px", fontSize: "x-large" }}
+      sx={{ width: "64px", height: "64px", fontSize: "x-large" }}
       className="square"
       onClick={onSquareClick}
     >
@@ -116,7 +116,11 @@ export default function TicTacToe() {
       description = "Go to game start";
     }
     return (
-      <Button key={move} onClick={() => JumpTo(move)}>
+      <Button
+        key={move}
+        onClick={() => JumpTo(move)}
+        sx={{ fontSize: "x-small" }}
+      >
         {description}
       </Button>
     );
@@ -124,19 +128,14 @@ export default function TicTacToe() {
 
   return (
     <Box>
-      <Typography
-        variant="h5"
-        component="p"
-        align="center"
-        sx={{ mt: 4, mb: 2 }}
-      >
+      <Typography variant="h6" component="p" sx={{ mt: 4, mb: 2 }}>
         Enjoy Tic-Tac-Toe game while waiting.
       </Typography>
       <Grid
         item
         container
         alignItems="flex-start"
-        justifyContent="space-between"
+        justifyContent="space-around"
       >
         <Grid>
           <Board

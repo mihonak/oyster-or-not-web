@@ -96,8 +96,8 @@ export function FileInput() {
   if (isActive) {
     return (
       <Box>
-        <Typography variant="h5" component="p" align="center" sx={{ m: 2 }}>
-          Upload your pic👇
+        <Typography variant="h6" component="p" sx={{ m: 2 }}>
+          Upload your pic.
         </Typography>
         <Box align="center" sx={{ m: 4 }}>
           <Button
@@ -159,7 +159,7 @@ export function FileInput() {
   } else {
     return (
       <Box>
-        <Typography variant="h5" component="p" align="center" sx={{ m: 2 }}>
+        <Typography variant="h6" component="p" sx={{ m: 2 }}>
           Welcome!
         </Typography>
         <Box align="center" sx={{ m: 4 }}>
